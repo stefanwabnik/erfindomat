@@ -116,13 +116,19 @@ const UI = {
     },
 
 
-    /*
-    --------------------------------
-    Neue Ziehung
-    --------------------------------
-    */
+/*
+--------------------------------
+Neue Ziehung
+--------------------------------
+*/
 
-    newDraw() {
+newDraw() {
+
+
+    this.animateCards();
+
+
+    setTimeout(() => {
 
 
         const result =
@@ -132,7 +138,45 @@ const UI = {
         this.render(result);
 
 
-    },
+    }, 450);
+
+
+},
+
+
+
+/*
+--------------------------------
+Kartenanimation
+--------------------------------
+*/
+
+animateCards() {
+
+
+    this.cards.forEach(card => {
+
+
+        card.classList.remove(
+            "drawing"
+        );
+
+
+        // Animation neu starten
+        void card.offsetWidth;
+
+
+        card.classList.add(
+            "drawing"
+        );
+
+
+    });
+
+
+},
+
+
 
 
     /*
