@@ -3,19 +3,16 @@
 
 ERFINDOMAT
 Core
-Version 0.1.0
+Version 0.1.1
 
 Die Engine des Erfindomaten.
 
-Zuständig für:
-- Ziehlogik
-- Datenverwaltung
-- Spielzustand
-
-Kennt keine Oberfläche.
+Neu:
+- gesperrte Karten bleiben erhalten
 
 ====================================
 */
+
 
 const Core = {
 
@@ -24,7 +21,11 @@ const Core = {
 
         currentDraw: [],
 
-        lockedCards: [false, false, false]
+        lockedCards: [
+            false,
+            false,
+            false
+        ]
 
     },
 
@@ -38,81 +39,136 @@ const Core = {
 
     /*
     --------------------------------
-    Startet eine neue Ziehung
+    Neue Ziehung erzeugen
     --------------------------------
     */
 
     draw() {
 
-        const available = [...VerbData];
-
 
         const result = [];
 
 
-        while (
-            result.length < this.settings.cardCount
-            &&
-            available.length > 0
-        ) {
+        const available = [
+            ...VerbData
+        ];
 
-            const index = Math.floor(
-                Math.random() * available.length
+
+
+        for(
+            let i = 0;
+            i < this.settings.cardCount;
+            i++
+        ){
+
+
+            /*
+            Gesperrte Karte behalten
+            */
+
+            if(
+                this.state.lockedCards[i]
+                &&
+                this.state.currentDraw[i]
+            ){
+
+                result[i] =
+                    this.state.currentDraw[i];
+
+                continue;
+
+            }
+
+
+
+            let item;
+
+
+            do {
+
+                const index =
+                    Math.floor(
+                        Math.random()
+                        *
+                        available.length
+                    );
+
+
+                item =
+                    available.splice(
+                        index,
+                        1
+                    )[0];
+
+
+            }
+            while(
+                this.contains(
+                    item.id,
+                    result
+                )
             );
 
 
-            const item = available.splice(index, 1)[0];
 
+            result[i] = item;
 
-            result.push(item);
 
         }
 
 
-        this.state.currentDraw = result;
+
+        this.state.currentDraw =
+            result;
 
 
         return result;
 
+
     },
+
 
 
     /*
     --------------------------------
-    Liefert die aktuelle Ziehung
+    Aktuelle Ziehung
     --------------------------------
     */
 
-    getCurrentDraw() {
+    getCurrentDraw(){
 
         return this.state.currentDraw;
 
     },
 
 
+
     /*
     --------------------------------
-    Sperren vorbereiten
+    Sperren
     --------------------------------
     */
 
-    lockCard(index) {
+    lockCard(index){
 
-        this.state.lockedCards[index] = true;
-
-    },
-
-
-    unlockCard(index) {
-
-        this.state.lockedCards[index] = false;
+        this.state.lockedCards[index]
+            = true;
 
     },
 
 
-    unlockAll() {
+    unlockCard(index){
 
-        this.state.lockedCards = [
+        this.state.lockedCards[index]
+            = false;
+
+    },
+
+
+    unlockAll(){
+
+        this.state.lockedCards =
+        [
             false,
             false,
             false
@@ -121,41 +177,41 @@ const Core = {
     },
 
 
-    isLocked(index) {
+    isLocked(index){
 
         return this.state.lockedCards[index];
 
     },
 
 
+
     /*
     --------------------------------
-    Prüft, ob ein neues Wort
-    bereits gezogen wurde
+    Dopplungen verhindern
     --------------------------------
     */
 
-    contains(id, list) {
+    contains(id,list){
 
-        return list.some(item => {
-
-            return item.id === id;
-
-        });
+        return list.some(
+            item =>
+                item.id === id
+        );
 
     },
 
 
+
     /*
     --------------------------------
-    Testfunktion
+    Debug
     --------------------------------
     */
 
-    info() {
+    info(){
 
         console.log(
-            "Erfindomat Core läuft.",
+            "Erfindomat Core",
             this.state
         );
 
