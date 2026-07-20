@@ -1,0 +1,353 @@
+/* ==========================================
+   ERFINDOMAT
+   Version 0.1.0
+========================================== */
+
+:root {
+
+    --bg: #f3f4f6;
+    --surface: #ffffff;
+
+    --text: #111827;
+    --text-light: #6b7280;
+
+    --primary: #111827;
+
+    --border: #e5e7eb;
+
+    --shadow:
+        0 12px 30px rgba(0,0,0,.08);
+
+    --radius: 22px;
+
+}
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    font-size:16px;
+
+}
+
+body{
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    min-height:100vh;
+
+}
+
+
+
+/* ==========================================
+   APP
+========================================== */
+
+.app{
+
+    width:min(1100px,94vw);
+
+    margin:auto;
+
+    padding:40px 0 60px;
+
+}
+
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+header{
+
+    text-align:center;
+
+    margin-bottom:50px;
+
+}
+
+h1{
+
+    font-size:3rem;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+}
+
+.subtitle{
+
+    color:var(--text-light);
+
+    font-size:1.1rem;
+
+}
+
+
+
+/* ==========================================
+   KARTEN
+========================================== */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:24px;
+
+    margin-bottom:40px;
+
+}
+
+.card{
+
+    background:var(--surface);
+
+    border-radius:var(--radius);
+
+    padding:28px;
+
+    box-shadow:var(--shadow);
+
+    position:relative;
+
+    transition:.25s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.lock-button{
+
+    position:absolute;
+
+    right:18px;
+
+    top:18px;
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    font-size:1.2rem;
+
+}
+
+.card-label{
+
+    color:var(--text-light);
+
+    font-size:.9rem;
+
+    margin-bottom:30px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.08em;
+
+}
+
+.card-word{
+
+    font-size:2.2rem;
+
+    font-weight:700;
+
+    min-height:52px;
+
+}
+
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.controls{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:18px;
+
+    margin-bottom:40px;
+
+    flex-wrap:wrap;
+
+}
+
+button{
+
+    font:inherit;
+
+}
+
+.primary,
+.secondary,
+#clearHistoryButton{
+
+    cursor:pointer;
+
+    border-radius:14px;
+
+    padding:16px 28px;
+
+    border:none;
+
+    transition:.2s;
+
+}
+
+.primary{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+.primary:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.secondary{
+
+    background:white;
+
+}
+
+.secondary:hover{
+
+    background:#f8f8f8;
+
+}
+
+#clearHistoryButton{
+
+    background:transparent;
+
+    color:var(--text-light);
+
+    padding:8px 12px;
+
+}
+
+
+
+/* ==========================================
+   BOXEN
+========================================== */
+
+.challenge,
+.history{
+
+    background:white;
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+    padding:28px;
+
+    margin-bottom:30px;
+
+}
+
+.challenge h2,
+.history h2{
+
+    margin-bottom:18px;
+
+}
+
+.history-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+#historyList{
+
+    margin-top:20px;
+
+    padding-left:20px;
+
+    line-height:1.9;
+
+}
+
+
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+footer{
+
+    margin-top:30px;
+
+    text-align:center;
+
+    color:var(--text-light);
+
+}
+
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width:900px){
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
+
+h1{
+
+font-size:2.3rem;
+
+}
+
+.card-word{
+
+font-size:1.8rem;
+
+}
+
+}

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Erfindomat</title>
+
+    <meta name="theme-color" content="#1f2937">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Erfindomat">
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <header>
+
+        <h1>🎲 Erfindomat</h1>
+
+        <p class="subtitle">
+            Aus Funktionen entstehen Erfindungen.
+        </p>
+
+    </header>
+
+
+    <main>
+
+        <section class="cards">
+
+            <article class="card" data-card="0">
+
+                <button class="lock-button" title="Karte sperren">
+                    🔓
+                </button>
+
+                <div class="card-label">
+                    Funktion
+                </div>
+
+                <div class="card-word">
+                    —
+                </div>
+
+            </article>
+
+
+
+            <article class="card" data-card="1">
+
+                <button class="lock-button">
+                    🔓
+                </button>
+
+                <div class="card-label">
+                    Funktion
+                </div>
+
+                <div class="card-word">
+                    —
+                </div>
+
+            </article>
+
+
+
+            <article class="card" data-card="2">
+
+                <button class="lock-button">
+                    🔓
+                </button>
+
+                <div class="card-label">
+                    Funktion
+                </div>
+
+                <div class="card-word">
+                    —
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <section class="controls">
+
+            <button id="drawButton" class="primary">
+
+                🎲 Neue Idee
+
+            </button>
+
+            <button id="unlockButton" class="secondary">
+
+                Alle entsperren
+
+            </button>
+
+        </section>
+
+
+        <section class="challenge">
+
+            <h2>Aufgabe</h2>
+
+            <p id="challengeText">
+
+                Drücke auf
+                <strong>Neue Idee</strong>
+                und entwirf einen Gegenstand,
+                der alle drei Funktionen erfüllt.
+
+            </p>
+
+        </section>
+
+
+        <section class="history">
+
+            <div class="history-header">
+
+                <h2>Verlauf</h2>
+
+                <button id="clearHistoryButton">
+
+                    Löschen
+
+                </button>
+
+            </div>
+
+            <ul id="historyList">
+
+            </ul>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        Version 0.1.0 · Erfindomat
+
+    </footer>
+
+</div>
+
+
+<script src="js/data.js"></script>
+<script src="js/core.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+
+</html>
