@@ -3,9 +3,10 @@
 
 ERFINDOMAT
 UI
-Version 0.1.0
+Version 0.2.1
 
-Verbindet Core und Oberfläche.
+Verbindet Oberfläche,
+Core und Speicher.
 
 ====================================
 */
@@ -20,6 +21,9 @@ const UI = {
 
     unlockButton: null,
 
+    historyList: null,
+
+
 
     /*
     --------------------------------
@@ -30,9 +34,10 @@ const UI = {
     init() {
 
 
-        this.cards = document.querySelectorAll(
-            ".card"
-        );
+        this.cards =
+            document.querySelectorAll(
+                ".card"
+            );
 
 
         this.drawButton =
@@ -47,6 +52,13 @@ const UI = {
             );
 
 
+        this.historyList =
+            document.getElementById(
+                "historyList"
+            );
+
+
+
         this.setupEvents();
 
 
@@ -55,12 +67,16 @@ const UI = {
         );
 
 
+        this.renderHistory();
+
+
     },
+
 
 
     /*
     --------------------------------
-    Buttons aktivieren
+    Ereignisse
     --------------------------------
     */
 
@@ -77,6 +93,7 @@ const UI = {
         );
 
 
+
         this.unlockButton.addEventListener(
             "click",
             () => {
@@ -89,8 +106,9 @@ const UI = {
         );
 
 
+
         this.cards.forEach(
-            (card, index) => {
+            (card,index)=>{
 
 
                 const button =
@@ -101,9 +119,11 @@ const UI = {
 
                 button.addEventListener(
                     "click",
-                    () => {
+                    ()=>{
 
-                        this.toggleLock(index);
+                        this.toggleLock(
+                            index
+                        );
 
                     }
                 );
@@ -116,72 +136,83 @@ const UI = {
     },
 
 
-/*
---------------------------------
-Neue Ziehung
---------------------------------
-*/
 
-newDraw() {
+    /*
+    --------------------------------
+    Neue Ziehung
+    --------------------------------
+    */
 
-
-    this.animateCards();
+    newDraw() {
 
 
-    setTimeout(() => {
+        this.animateCards();
 
 
-        const result =
-            Core.draw();
+        setTimeout(()=>{
 
 
-        this.render(result);
-
-
-    }, 450);
-
-
-},
+            const result =
+                Core.draw();
 
 
 
-/*
---------------------------------
-Kartenanimation
---------------------------------
-*/
-
-animateCards() {
+            this.render(
+                result
+            );
 
 
-    this.cards.forEach(card => {
+            Storage.saveIdea(
+                result
+            );
 
 
-        card.classList.remove(
-            "drawing"
-        );
+            this.renderHistory();
 
 
-        // Animation neu starten
-        void card.offsetWidth;
+
+        },450);
 
 
-        card.classList.add(
-            "drawing"
-        );
-
-
-    });
-
-
-},
-
+    },
 
 
 
     /*
     --------------------------------
-    Daten in Karten schreiben
+    Animation
+    --------------------------------
+    */
+
+    animateCards() {
+
+
+        this.cards.forEach(card=>{
+
+
+            card.classList.remove(
+                "drawing"
+            );
+
+
+            void card.offsetWidth;
+
+
+            card.classList.add(
+                "drawing"
+            );
+
+
+        });
+
+
+    },
+
+
+
+    /*
+    --------------------------------
+    Karten anzeigen
     --------------------------------
     */
 
@@ -189,7 +220,7 @@ animateCards() {
 
 
         this.cards.forEach(
-            (card, index) => {
+            (card,index)=>{
 
 
                 const word =
@@ -198,7 +229,7 @@ animateCards() {
                     );
 
 
-                if(items[index]) {
+                if(items[index]){
 
 
                     word.textContent =
@@ -206,7 +237,7 @@ animateCards() {
 
 
                 }
-                else {
+                else{
 
 
                     word.textContent =
@@ -226,9 +257,10 @@ animateCards() {
     },
 
 
+
     /*
     --------------------------------
-    Sperr-Symbole aktualisieren
+    Schlossanzeige
     --------------------------------
     */
 
@@ -236,7 +268,7 @@ animateCards() {
 
 
         this.cards.forEach(
-            (card, index) => {
+            (card,index)=>{
 
 
                 const button =
@@ -245,22 +277,12 @@ animateCards() {
                     );
 
 
-                if(Core.isLocked(index)) {
-
-
-                    button.textContent =
-                        "🔒";
-
-
-                }
-                else {
-
-
-                    button.textContent =
-                        "🔓";
-
-
-                }
+                button.textContent =
+                    Core.isLocked(index)
+                    ?
+                    "🔒"
+                    :
+                    "🔓";
 
 
             }
@@ -270,33 +292,110 @@ animateCards() {
     },
 
 
+
     /*
     --------------------------------
-    Karte sperren / entsperren
-    --------------------------------
+    Sperren
     --------------------------------
     */
 
-    toggleLock(index) {
+    toggleLock(index){
 
 
-        if(Core.isLocked(index)) {
+        if(
+            Core.isLocked(index)
+        ){
 
 
-            Core.unlockCard(index);
+            Core.unlockCard(
+                index
+            );
 
 
         }
-        else {
+        else{
 
 
-            Core.lockCard(index);
+            Core.lockCard(
+                index
+            );
 
 
         }
 
 
         this.updateLocks();
+
+
+    },
+
+
+
+    /*
+    --------------------------------
+    Ideenarchiv anzeigen
+    --------------------------------
+    */
+
+    renderHistory(){
+
+
+        if(!this.historyList){
+
+            return;
+
+        }
+
+
+
+        const ideas =
+            Storage.getIdeas();
+
+
+
+        this.historyList.innerHTML =
+            "";
+
+
+
+        ideas.forEach(
+            idea=>{
+
+
+                const card =
+                    document.createElement(
+                        "li"
+                    );
+
+
+                card.className =
+                    "idea-card";
+
+
+
+                card.innerHTML = `
+
+                    <div class="idea-date">
+                        ${idea.date}
+                    </div>
+
+                    <div class="idea-functions">
+                        ${idea.functions.join(
+                            " · "
+                        )}
+                    </div>
+
+                `;
+
+
+
+                this.historyList.appendChild(
+                    card
+                );
+
+
+            }
+        );
 
 
     }
