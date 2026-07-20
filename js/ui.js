@@ -3,7 +3,7 @@
 
 ERFINDOMAT
 UI
-Version 0.2.1
+Version 0.3.0
 
 Verbindet Oberfläche,
 Core und Speicher.
@@ -11,9 +11,7 @@ Core und Speicher.
 ====================================
 */
 
-
 const UI = {
-
 
     cards: [],
 
@@ -32,7 +30,6 @@ const UI = {
     */
 
     init() {
-
 
         this.cards =
             document.querySelectorAll(
@@ -58,17 +55,24 @@ const UI = {
             );
 
 
-
         this.setupEvents();
 
 
+        const result =
+            Core.draw();
+
+
         this.render(
-            Core.draw()
+            result
+        );
+
+
+        this.renderChallenge(
+            result
         );
 
 
         this.renderHistory();
-
 
     },
 
@@ -82,39 +86,50 @@ const UI = {
 
     setupEvents() {
 
+        if(this.drawButton){
 
-        this.drawButton.addEventListener(
-            "click",
-            () => {
+            this.drawButton.addEventListener(
+                "click",
+                () => {
 
-                this.newDraw();
+                    this.newDraw();
 
-            }
-        );
+                }
+            );
+
+        }
 
 
+        if(this.unlockButton){
 
-        this.unlockButton.addEventListener(
-            "click",
-            () => {
+            this.unlockButton.addEventListener(
+                "click",
+                () => {
 
-                Core.unlockAll();
+                    Core.unlockAll();
 
-                this.updateLocks();
+                    this.updateLocks();
 
-            }
-        );
+                }
+            );
 
+        }
 
 
         this.cards.forEach(
             (card,index)=>{
 
-
                 const button =
                     card.querySelector(
                         ".lock-button"
                     );
+
+
+                if(!button){
+
+                    return;
+
+                }
 
 
                 button.addEventListener(
@@ -128,10 +143,8 @@ const UI = {
                     }
                 );
 
-
             }
         );
-
 
     },
 
@@ -145,19 +158,21 @@ const UI = {
 
     newDraw() {
 
-
         this.animateCards();
 
 
         setTimeout(()=>{
 
-
             const result =
                 Core.draw();
 
 
-
             this.render(
+                result
+            );
+
+
+            this.renderChallenge(
                 result
             );
 
@@ -169,10 +184,7 @@ const UI = {
 
             this.renderHistory();
 
-
-
         },450);
-
 
     },
 
@@ -186,31 +198,27 @@ const UI = {
 
     animateCards() {
 
+        this.cards.forEach(
+            card=>{
 
-        this.cards.forEach(card=>{
-
-
-            card.classList.remove(
-                "drawing"
-            );
-
-
-            void card.offsetWidth;
+                card.classList.remove(
+                    "drawing"
+                );
 
 
-            card.classList.add(
-                "drawing"
-            );
+                void card.offsetWidth;
 
 
-        });
+                card.classList.add(
+                    "drawing"
+                );
 
+            }
+        );
 
     },
 
-
-
-    /*
+        /*
     --------------------------------
     Karten anzeigen
     --------------------------------
@@ -218,10 +226,8 @@ const UI = {
 
     render(items) {
 
-
         this.cards.forEach(
             (card,index)=>{
-
 
                 const word =
                     card.querySelector(
@@ -231,28 +237,22 @@ const UI = {
 
                 if(items[index]){
 
-
                     word.textContent =
                         items[index].text;
-
 
                 }
                 else{
 
-
                     word.textContent =
                         "—";
 
-
                 }
-
 
             }
         );
 
 
         this.updateLocks();
-
 
     },
 
@@ -266,15 +266,20 @@ const UI = {
 
     updateLocks() {
 
-
         this.cards.forEach(
             (card,index)=>{
-
 
                 const button =
                     card.querySelector(
                         ".lock-button"
                     );
+
+
+                if(!button){
+
+                    return;
+
+                }
 
 
                 button.textContent =
@@ -284,10 +289,8 @@ const UI = {
                     :
                     "🔓";
 
-
             }
         );
-
 
     },
 
@@ -295,37 +298,63 @@ const UI = {
 
     /*
     --------------------------------
-    Sperren
+    Karte sperren / entsperren
     --------------------------------
     */
 
     toggleLock(index){
 
-
         if(
             Core.isLocked(index)
         ){
-
 
             Core.unlockCard(
                 index
             );
 
-
         }
         else{
-
 
             Core.lockCard(
                 index
             );
-
 
         }
 
 
         this.updateLocks();
 
+    },
+
+
+
+    /*
+    --------------------------------
+    Aufgabe anzeigen
+    --------------------------------
+    */
+
+    renderChallenge(items){
+
+        const text =
+            document.getElementById(
+                "challengeText"
+            );
+
+
+        if(
+            text
+            &&
+            typeof Challenge !==
+            "undefined"
+        ){
+
+            text.textContent =
+                Challenge.create(
+                    items
+                );
+
+        }
 
     },
 
@@ -333,12 +362,11 @@ const UI = {
 
     /*
     --------------------------------
-    Ideenarchiv anzeigen
+    Verlauf anzeigen
     --------------------------------
     */
 
     renderHistory(){
-
 
         if(!this.historyList){
 
@@ -347,33 +375,28 @@ const UI = {
         }
 
 
-
         const ideas =
             Storage.getIdeas();
-
 
 
         this.historyList.innerHTML =
             "";
 
 
-
         ideas.forEach(
             idea=>{
 
-
-                const card =
+                const entry =
                     document.createElement(
                         "li"
                     );
 
 
-                card.className =
+                entry.className =
                     "idea-card";
 
 
-
-                card.innerHTML = `
+                entry.innerHTML = `
 
                     <div class="idea-date">
                         ${idea.date}
@@ -388,17 +411,13 @@ const UI = {
                 `;
 
 
-
                 this.historyList.appendChild(
-                    card
+                    entry
                 );
-
 
             }
         );
 
-
     }
-
 
 };

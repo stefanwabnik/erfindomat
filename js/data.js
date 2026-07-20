@@ -2,213 +2,361 @@
 ====================================
 
 ERFINDOMAT
-Version 0.1.0
+Funktionsbibliothek
+Version 0.3.0
 
-Datenbank der Funktionen
+Funktionen statt Wörter.
 
 ====================================
 */
 
+
 const VerbData = [
 
-    {
-        id: 1,
-        text: "rollen",
-        tags: ["bewegung", "mechanik"],
-        difficulty: 1,
-        novelty: 4
-    },
 
-    {
-        id: 2,
-        text: "heben",
-        tags: ["bewegung"],
-        difficulty: 1,
-        novelty: 3
-    },
+{
+    id: 1,
 
-    {
-        id: 3,
-        text: "ziehen",
-        tags: ["bewegung"],
-        difficulty: 1,
-        novelty: 3
-    },
+    text: "rollen",
 
-    {
-        id: 4,
-        text: "drücken",
-        tags: ["mechanik"],
-        difficulty: 1,
-        novelty: 3
-    },
+    description:
+        "Bewegt sich durch Drehung über eine Fläche.",
 
-    {
-        id: 5,
-        text: "drehen",
-        tags: ["bewegung", "mechanik"],
-        difficulty: 1,
-        novelty: 3
-    },
+    tags:[
+        "bewegung",
+        "mechanik"
+    ],
 
-    {
-        id: 6,
-        text: "falten",
-        tags: ["mechanik"],
-        difficulty: 2,
-        novelty: 5
-    },
+    partners:[
+        "transportieren",
+        "falten",
+        "stoppen"
+    ],
 
-    {
-        id: 7,
-        text: "klappen",
-        tags: ["mechanik"],
-        difficulty: 2,
-        novelty: 4
-    },
+    surprise: 4
+},
 
-    {
-        id: 8,
-        text: "verbinden",
-        tags: ["material"],
-        difficulty: 1,
-        novelty: 2
-    },
 
-    {
-        id: 9,
-        text: "trennen",
-        tags: ["material"],
-        difficulty: 1,
-        novelty: 2
-    },
+{
+    id: 2,
 
-    {
-        id: 10,
-        text: "filtern",
-        tags: ["technik", "wasser"],
-        difficulty: 2,
-        novelty: 7
-    },
+    text: "heben",
 
-    {
-        id: 11,
-        text: "reinigen",
-        tags: ["technik"],
-        difficulty: 2,
-        novelty: 5
-    },
+    description:
+        "Bringt etwas nach oben oder löst es vom Boden.",
 
-    {
-        id: 12,
-        text: "kühlen",
-        tags: ["energie"],
-        difficulty: 2,
-        novelty: 5
-    },
+    tags:[
+        "bewegung",
+        "kraft"
+    ],
 
-    {
-        id: 13,
-        text: "wärmen",
-        tags: ["energie"],
-        difficulty: 2,
-        novelty: 5
-    },
+    partners:[
+        "schweben",
+        "balancieren",
+        "transportieren"
+    ],
 
-    {
-        id: 14,
-        text: "isolieren",
-        tags: ["energie"],
-        difficulty: 2,
-        novelty: 6
-    },
+    surprise: 5
+},
 
-    {
-        id: 15,
-        text: "warnen",
-        tags: ["information"],
-        difficulty: 2,
-        novelty: 8
-    },
 
-    {
-        id: 16,
-        text: "anzeigen",
-        tags: ["information"],
-        difficulty: 1,
-        novelty: 4
-    },
+{
+    id: 3,
 
-    {
-        id: 17,
-        text: "messen",
-        tags: ["information"],
-        difficulty: 2,
-        novelty: 6
-    },
+    text: "falten",
 
-    {
-        id: 18,
-        text: "schützen",
-        tags: ["schutz"],
-        difficulty: 1,
-        novelty: 4
-    },
+    description:
+        "Verändert die Form durch Zusammenlegen.",
 
-    {
-        id: 19,
-        text: "abdichten",
-        tags: ["schutz"],
-        difficulty: 2,
-        novelty: 6
-    },
+    tags:[
+        "form",
+        "mechanik"
+    ],
 
-    {
-        id: 20,
-        text: "dämpfen",
-        tags: ["schutz"],
-        difficulty: 2,
-        novelty: 6
-    },
+    partners:[
+        "verstauen",
+        "transportieren",
+        "schützen"
+    ],
 
-    {
-        id: 21,
-        text: "speichern",
-        tags: ["information"],
-        difficulty: 2,
-        novelty: 7
-    },
+    surprise: 7
+},
 
-    {
-        id: 22,
-        text: "sortieren",
-        tags: ["organisation"],
-        difficulty: 1,
-        novelty: 5
-    },
 
-    {
-        id: 23,
-        text: "verstecken",
-        tags: ["schutz"],
-        difficulty: 2,
-        novelty: 7
-    },
+{
+    id: 4,
 
-    {
-        id: 24,
-        text: "schweben",
-        tags: ["bewegung"],
-        difficulty: 3,
-        novelty: 10
-    },
+    text: "filtern",
 
-    {
-        id: 25,
-        text: "verdichten",
-        tags: ["material"],
-        difficulty: 3,
-        novelty: 9
-    }
+    description:
+        "Trennt einen Stoff von einem anderen.",
+
+    tags:[
+        "trennen",
+        "wasser",
+        "technik"
+    ],
+
+    partners:[
+        "messen",
+        "reinigen",
+        "speichern"
+    ],
+
+    surprise: 8
+},
+
+
+{
+    id: 5,
+
+    text: "messen",
+
+    description:
+        "Erfasst eine Eigenschaft und macht sie sichtbar.",
+
+    tags:[
+        "information",
+        "technik"
+    ],
+
+    partners:[
+        "warnen",
+        "speichern",
+        "anzeigen"
+    ],
+
+    surprise: 7
+},
+
+
+{
+    id: 6,
+
+    text: "warnen",
+
+    description:
+        "Macht auf eine Gefahr oder Veränderung aufmerksam.",
+
+    tags:[
+        "information",
+        "sicherheit"
+    ],
+
+    partners:[
+        "messen",
+        "schützen",
+        "anzeigen"
+    ],
+
+    surprise: 8
+},
+
+
+{
+    id: 7,
+
+    text: "schützen",
+
+    description:
+        "Verhindert Schäden von außen.",
+
+    tags:[
+        "sicherheit",
+        "schutz"
+    ],
+
+    partners:[
+        "isolieren",
+        "abdichten",
+        "falten"
+    ],
+
+    surprise: 5
+},
+
+
+{
+    id: 8,
+
+    text: "isolieren",
+
+    description:
+        "Trennt etwas gegen Wärme, Kälte oder Geräusche ab.",
+
+    tags:[
+        "schutz",
+        "energie"
+    ],
+
+    partners:[
+        "transportieren",
+        "speichern",
+        "schützen"
+    ],
+
+    surprise: 6
+},
+
+
+{
+    id: 9,
+
+    text: "schweben",
+
+    description:
+        "Bleibt ohne direkten Kontakt in einer Position.",
+
+    tags:[
+        "bewegung",
+        "ungewöhnlich"
+    ],
+
+    partners:[
+        "heben",
+        "schützen",
+        "beleuchten"
+    ],
+
+    surprise: 10
+},
+
+
+{
+    id: 10,
+
+    text: "speichern",
+
+    description:
+        "Bewahrt etwas für später auf.",
+
+    tags:[
+        "aufbewahren",
+        "information"
+    ],
+
+    partners:[
+        "filtern",
+        "messen",
+        "transportieren"
+    ],
+
+    surprise: 7
+},
+
+
+{
+    id: 11,
+
+    text: "verbinden",
+
+    description:
+        "Bringt mehrere Dinge dauerhaft oder lösbar zusammen.",
+
+    tags:[
+        "material",
+        "konstruktion"
+    ],
+
+    partners:[
+        "trennen",
+        "falten",
+        "verstärken"
+    ],
+
+    surprise: 4
+},
+
+
+{
+    id: 12,
+
+    text: "trennen",
+
+    description:
+        "Teilt etwas in einzelne Bestandteile.",
+
+    tags:[
+        "material",
+        "organisation"
+    ],
+
+    partners:[
+        "filtern",
+        "sortieren",
+        "verbinden"
+    ],
+
+    surprise: 6
+},
+
+
+{
+    id: 13,
+
+    text: "transportieren",
+
+    description:
+        "Bewegt etwas von einem Ort zum anderen.",
+
+    tags:[
+        "bewegung",
+        "nutzen"
+    ],
+
+    partners:[
+        "rollen",
+        "falten",
+        "schützen"
+    ],
+
+    surprise: 3
+},
+
+
+{
+    id: 14,
+
+    text: "anzeigen",
+
+    description:
+        "Macht Informationen sichtbar.",
+
+    tags:[
+        "information"
+    ],
+
+    partners:[
+        "messen",
+        "warnen",
+        "speichern"
+    ],
+
+    surprise: 5
+},
+
+
+{
+    id: 15,
+
+    text: "verstauen",
+
+    description:
+        "Reduziert Platzbedarf und organisiert Dinge.",
+
+    tags:[
+        "organisation",
+        "raum"
+    ],
+
+    partners:[
+        "falten",
+        "transportieren",
+        "sortieren"
+    ],
+
+    surprise: 6
+}
+
 
 ];
